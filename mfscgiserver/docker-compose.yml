@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+  mfscgiserver:
+    image: gerardogve/moosefs-cgi-amd64:latest
+    ports:
+       - 9425:9425
+    deploy:
+      replicas: 1
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik
+        - traefik.http.routers.mfscgiserver.entrypoints=web
+        - traefik.http.routers.mfscgiserver.rule=Host(`mfscgiserver.cofhome`)
+        - traefik.http.routers.mfscgiserver.service=mfscgiserver
+        - traefik.http.services.mfscgiserver.loadbalancer.server.port=9425
+        - traefik.port=80
+      placement:
+        constraints:
+          -  node.labels.nuc==true
+        preferences:
+          - spread: node.labels.nuc
+    networks:
+      - traefik
+
+networks:
+  # Use the previously created public network "traefik-public", shared with other
+  # services that need to be publicly available via this Traefik
+  traefik:
+    external: true
