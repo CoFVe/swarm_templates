@@ -1,0 +1,15 @@
+version: '3.9'
+  services:
+    duckdns:
+      image: lscr.io/linuxserver/duckdns:latest
+      container_name: duckdns
+      deploy:
+        replicas: 1
+      environment:
+        - PUID=1000
+        - PGID=1000
+        - TZ=Europe/Madrid
+        - SUBDOMAINS=cofhome
+        - TOKEN=12cbf1c5-1339-439c-9c71-5a2843508353
+        - LOG_FILE=false
+      restart: unless-stopped
