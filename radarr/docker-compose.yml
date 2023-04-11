@@ -1,0 +1,35 @@
+version: '3.9'
+services:
+  radarr:
+    image: ghcr.io/linuxserver/radarr:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Madrid
+    networks:
+      # Use the public network created to be shared between Traefik and
+      # any other service that needs to be publicly available with HTTPS
+      - traefik
+    volumes:
+      - /mnt/moosefs/apps/Radarr:/config
+      - /mnt/moosefs/movies/peliculas:/movies
+      - /mnt/moosefs/downloads:/downloads
+    ports:
+      - "7878:7878"
+    restart: unless-stopped
+    deploy:
+      replicas: 1
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik
+        - traefik.http.routers.radarr.entrypoints=web
+        - traefik.http.routers.radarr.rule=Host(`radarr.cofhome`)
+        - traefik.http.routers.radarr.service=radarr
+        - traefik.http.services.radarr.loadbalancer.server.port=7878
+        - traefik.port=80
+
+networks:
+  # Use the previously created public network "traefik-public", shared with other
+  # services that need to be publicly available via this Traefik
+  traefik:
+    external: true
