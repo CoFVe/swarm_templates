@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  mfschunkserver3:
+    image: gerardogve/moosefs-chunkserver:latest
+    deploy:
+      placement:
+        constraints:
+          -  node.labels.dietpi1==true
+        preferences:
+          - spread: node.labels.dietpi
+    networks:
+      - outside
+    volumes:
+      - /mnt/disk3/moosefs:/mnt/hdd0
+      - /mnt/disk4/moosefs:/mnt/hdd1
+      - /mnt/disk9/moosefs:/mnt/hdd2
+      - /docker/mfschunkserver3:/var/lib/mfs
+      - /docker/mfschunkserver3:/etc/mfs
+  mfsmetalogger3:
+    image: gerardogve/moosefs-metalogger:latest
+    deploy:
+      placement:
+        constraints:
+          -  node.labels.dietpi1==true
+        preferences:
+          - spread: node.labels.dietpi
+    networks:
+      - outside
+    volumes:
+      - /docker/mfschunkserver3:/var/lib/mfs
+      - /docker/mfschunkserver3:/etc/mfs
+
+networks:
+  outside:
+    external:
+      name: "host"
