@@ -1,0 +1,80 @@
+version: '3.9'
+services:
+  plex:
+    image: ghcr.io/linuxserver/plex:latest
+    #ports:
+    #  - "32400:32400"
+    #  - "3005:3005/tcp"
+    #  - "8324:8324/tcp"
+    #  - "32469:32469/tcp"
+    #  - "1900:1900/udp"
+    #  - "32410:32410/udp"
+    #  - "32412:32412/udp"
+    #  - "32413:32413/udp"
+    #  - "32414:32414/udp"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+      - ADVERTISE_IP="http://172.25.25.5:32400"
+    volumes:
+      - /mnt/moosefs/apps/Plex:/config
+      - /mnt/moosefs/series/shows:/tv_shows
+      - /mnt/moosefs/movies/peliculas:/peliculas
+      - /mnt/moosefs/movies/3d:/3d_movies
+      - /mnt/moosefs/movies/infantiles:/peliculas_infantiles
+      - /mnt/moosefs/movies/anime:/movies_anime
+      - /mnt/moosefs/series/anime:/series_anime
+      - /mnt/moosefs/series/ecchi:/series_ecchi
+      - /mnt/moosefs/music:/music
+      - /mnt/moosefs/movies/comic:/peliculas_comic
+      - /mnt/moosefs/movies/ecchi:/movies_ecchi
+    hostname: odroidxu4
+    deploy:
+      replicas: 1
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=outside
+        - traefik.http.routers.plex.entrypoints=web
+        - traefik.http.routers.plex.rule=Host(`plex.cofhome`)
+        - traefik.http.routers.plex.service=plex
+        - traefik.http.services.plex.loadbalancer.server.port=32400
+        - traefik.port=80
+      placement:
+        constraints:
+          -  node.labels.nuc==true
+        preferences:
+          - spread: node.labels.nuc
+    restart: always
+    devices:
+      - /dev/dri:/dev/dri
+    networks:
+      - outside
+  kitana:
+    image: pannal/kitana:latest
+    container_name: kitana
+    volumes:
+      - /mnt/moosefs/apps/kitana:/app/data
+    #ports:
+      #- 31337:31337
+    links:
+      - plex
+    command: -B 0.0.0.0:31337 -p /kitana -P
+    restart: unless-stopped
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          -  node.labels.nuc==true
+        preferences:
+          - spread: node.labels.nuc
+    networks:
+      - outside
+
+#networks:
+  #traefik:
+  #  external: true
+networks:
+  outside:
+    external:
+      name: "host"
