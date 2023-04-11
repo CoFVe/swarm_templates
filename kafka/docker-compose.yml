@@ -1,0 +1,43 @@
+version: '3.9'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - target: 2181
+        published: 2181
+        protocol: tcp
+        mode: host
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          -  node.labels.nuc==true
+        preferences:
+          - spread: node.labels.nuc
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    deploy:
+      mode: global
+    ports:
+      - target: 9094
+        published: 9094
+        protocol: tcp
+        mode: host
+    environment:
+      HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
+      KAFKA_ZOOKEEPER_CONNECT: 172.25.25.5:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9094
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_CREATE_TOPICS: producer_logs:2:3
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - outside
+
+networks:
+  outside:
+    external:
+      name: "host"
