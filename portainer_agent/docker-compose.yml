@@ -11,6 +11,4 @@ services:
     deploy:
       replicas: 3
       placement:
-        preferences:
-          - spread: node.labels.nuc
-          - spread: node.labels.dietpi
+        max_replicas_per_node: 1
