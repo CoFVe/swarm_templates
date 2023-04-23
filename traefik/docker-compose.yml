@@ -8,9 +8,9 @@ services:
      - 80:80
      - 8080:8080
     deploy:
-       replicas: 3
-       placement:
-        constraints:
+        replicas: 3
+        placement:
+          max_replicas_per_node: 1
         # Make the traefik service run only on the node with this label
         # as the node with it has the volume for the certificates
          - node.role == manager
