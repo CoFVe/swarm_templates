@@ -23,6 +23,7 @@ services:
       - /mnt/moosefs/movies/peliculas:/peliculas
       - /mnt/moosefs/movies/3d:/3d_movies
       - /mnt/moosefs/movies/infantiles:/peliculas_infantiles
+      - /mnt/moosefs/series/infantiles:/series_infantiles
       - /mnt/moosefs/movies/anime:/movies_anime
       - /mnt/moosefs/series/anime:/series_anime
       - /mnt/moosefs/series/ecchi:/series_ecchi
