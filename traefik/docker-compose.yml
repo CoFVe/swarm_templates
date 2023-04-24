@@ -13,7 +13,7 @@ services:
           max_replicas_per_node: 1
         # Make the traefik service run only on the node with this label
         # as the node with it has the volume for the certificates
-         - node.role == manager
+          - node.role == manager
        labels:
         # Enable Traefik for this service, to make it available in the public network
           - traefik.enable=true
