@@ -2,16 +2,16 @@ version: '3.9'
 services:
   plex:
     image: ghcr.io/linuxserver/plex:latest
-    #ports:
-    #  - "32400:32400"
-    #  - "3005:3005/tcp"
-    #  - "8324:8324/tcp"
-    #  - "32469:32469/tcp"
-    #  - "1900:1900/udp"
-    #  - "32410:32410/udp"
-    #  - "32412:32412/udp"
-    #  - "32413:32413/udp"
-    #  - "32414:32414/udp"
+    ports:
+      - "32400:32400"
+      - "3005:3005/tcp"
+      - "8324:8324/tcp"
+      - "32469:32469/tcp"
+      - "1900:1900/udp"
+      - "32410:32410/udp"
+      - "32412:32412/udp"
+      - "32413:32413/udp"
+      - "32414:32414/udp"
     environment:
       - PUID=1000
       - PGID=1000
@@ -50,7 +50,7 @@ services:
     devices:
       - /dev/dri:/dev/dri
     networks:
-      - outside
+      - traefik
   kitana:
     image: pannal/kitana:latest
     container_name: kitana
@@ -70,12 +70,12 @@ services:
         preferences:
           - spread: node.labels.nuc
     networks:
-      - outside
+      - traefik
 
-#networks:
-  #traefik:
-  #  external: true
 networks:
-  outside:
-    external:
-      name: "host"
+  traefik:
+    external: true
+#networks:
+  #outside:
+    #external:
+      #name: "host"
