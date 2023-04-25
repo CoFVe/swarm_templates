@@ -58,7 +58,7 @@ services:
     volumes:
       - /mnt/moosefs/apps/kitana:/app/data
     ports:
-      - 172.25.25.5:31337:31337
+      - 127.0.0.1:31337:31337
     links:
       - plex
     command: -B 0.0.0.0:31337 -p /kitana -P
