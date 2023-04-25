@@ -63,7 +63,7 @@ services:
       - plex
     links:
       - plex
-    command: -B 172.25.25.5:31337 -p /kitana -P
+    command: -B 127.0.0.1:31337 -p /kitana -P
     restart: unless-stopped
     deploy:
       replicas: 1
