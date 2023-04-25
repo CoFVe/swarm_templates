@@ -58,10 +58,12 @@ services:
     volumes:
       - /mnt/moosefs/apps/kitana:/app/data
     ports:
-      - 127.0.0.1:31337:31337
+      - 31337:31337
+    depends_on:
+      - plex
     links:
       - plex
-    command: -B 0.0.0.0:31337 -p /kitana -P
+    command: -B 172.25.25.5:31337 -p /kitana -P
     restart: unless-stopped
     deploy:
       replicas: 1
