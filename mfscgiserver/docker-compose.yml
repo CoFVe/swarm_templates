@@ -7,6 +7,7 @@ services:
     deploy:
       replicas: 1
       labels:
+        - traefik.constraint-label=traefik
         - traefik.enable=true
         - traefik.docker.network=traefik
         - traefik.http.routers.mfscgiserver.entrypoints=web
