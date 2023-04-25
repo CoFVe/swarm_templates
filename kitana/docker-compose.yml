@@ -1,0 +1,34 @@
+version: '3.9'
+services:
+  kitana:
+    image: pannal/kitana:latest
+    container_name: kitana
+    volumes:
+      - /mnt/moosefs/apps/kitana:/app/data
+    ports:
+      - 31337:31337
+    command: -B 0.0.0.0:31337 -p /kitana -P
+    restart: unless-stopped
+    deploy:
+      replicas: 1
+      labels:
+        - traefik.constraint-label=traefik
+        - traefik.enable=true
+        - traefik.docker.network=traefik
+        - traefik.http.routers.kitana.entrypoints=web
+        - traefik.http.routers.kitana.rule=Host(`kitana.cofhome`)
+        - traefik.http.routers.kitana.service=kitana
+        - traefik.http.services.kitana.loadbalancer.server.port=31337
+        - traefik.port=80
+      placement:
+        constraints:
+          -  node.labels.nuc==true
+        preferences:
+          - spread: node.labels.nuc
+    networks:
+      - outside
+
+networks:
+  outside:
+    external:
+      name: "host"
