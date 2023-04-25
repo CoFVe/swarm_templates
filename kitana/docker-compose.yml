@@ -25,10 +25,4 @@ services:
           -  node.labels.nuc==true
         preferences:
           - spread: node.labels.nuc
-    networks:
-      - outside
-
-networks:
-  outside:
-    external:
-      name: "host"
+    network_mode: host
