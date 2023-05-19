@@ -11,8 +11,8 @@ services:
     networks:
       - outside
     volumes:
-      - /mnt/disk2/moosefs:/mnt/hdd0
-      - /mnt/disk1/moosefs:/mnt/hdd1
+      #- /mnt/disk2/moosefs:/mnt/hdd0
+      #- /mnt/disk1/moosefs:/mnt/hdd1
       - /mnt/disk10/moosefs:/mnt/hdd2
       - /docker/mfschunkserver1:/var/lib/mfs
       - /docker/mfschunkserver1:/etc/mfs
