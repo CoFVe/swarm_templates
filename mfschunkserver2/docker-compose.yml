@@ -11,7 +11,7 @@ services:
     networks:
       - outside
     volumes:
-      - /mnt/disk11/moosefs:/mnt/hdd1
+      - /mnt/disk11/moosefs:/mnt/hdd0
       - /mnt/disk6/moosefs:/mnt/hdd3
       - /mnt/disk7/moosefs:/mnt/hdd4
       - /mnt/disk8/moosefs:/mnt/hdd5
