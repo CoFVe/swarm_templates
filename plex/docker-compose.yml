@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   plex:
-    image: ghcr.io/linuxserver/plex:latest
+    image: ghcr.io/linuxserver/plex:1.32.8
     #ports:
     #  - "32400:32400"
     #  - "3005:3005/tcp"
