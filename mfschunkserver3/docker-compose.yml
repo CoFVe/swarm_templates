@@ -14,6 +14,7 @@ services:
       - /mnt/disk3/moosefs:/mnt/hdd0
       - /mnt/disk4/moosefs:/mnt/hdd1
       - /mnt/disk9/moosefs:/mnt/hdd2
+      - /mnt/disk13/moosefs:/mnt/hdd3
       - /docker/mfschunkserver3:/var/lib/mfs
       - /docker/mfschunkserver3:/etc/mfs
   mfsmetalogger3:
