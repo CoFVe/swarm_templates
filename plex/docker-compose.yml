@@ -5,6 +5,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
+      - VERSION=docker
       - ADVERTISE_IP="http://172.25.25.5:32400"
     volumes:
       - /mnt/moosefs/apps/Plex:/config
@@ -19,6 +20,7 @@ services:
       - /mnt/moosefs/music:/music
       - /mnt/moosefs/movies/comic:/peliculas_comic
       - /mnt/moosefs/movies/ecchi:/movies_ecchi
+    hostname: odroidxu4
     devices:
       - /dev/dri:/dev/dri
     deploy:
