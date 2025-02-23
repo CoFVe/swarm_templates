@@ -14,9 +14,12 @@ services:
     #  - "32414:32414/udp"
     environment:
       - PUID=1000
-      - PGID=1000
+      - PGID=44         # Updated to match host's video group
+      #- PGID=1000
       - VERSION=docker
       - ADVERTISE_IP="http://172.25.25.5:32400"
+      - LIBVA_DRIVER_NAME=radeonsi
+      - LIBVA_DRIVERS_PATH=/usr/lib/x86_64-linux-gnu/dri
     volumes:
       - /mnt/moosefs/apps/Plex:/config
       - /mnt/moosefs/series/shows:/tv_shows
@@ -30,6 +33,7 @@ services:
       - /mnt/moosefs/music:/music
       - /mnt/moosefs/movies/comic:/peliculas_comic
       - /mnt/moosefs/movies/ecchi:/movies_ecchi
+      - dri:/dev/dri
     hostname: odroidxu4
     deploy:
       replicas: 1
@@ -47,8 +51,6 @@ services:
         preferences:
           - spread: node.labels.nuc
     restart: always
-    devices:
-      - /dev/dri:/dev/dri
     networks:
       - outside
  
@@ -59,3 +61,10 @@ networks:
   outside:
     external:
       name: "host"
+volumes:
+  dri:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /dev/dri
