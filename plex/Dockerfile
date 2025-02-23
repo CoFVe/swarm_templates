@@ -23,7 +23,7 @@ ENV LIBVA_DRIVERS_PATH=/usr/lib/x86_64-linux-gnu/dri
 
 # For testing, you can override the entrypoint to run a VA-API test:
 # Uncomment the following line to run vainfo on container startup:
-CMD ["vainfo", "--display", "drm", "--device", "/dev/dri/card0"]
+#CMD ["vainfo", "--display", "drm", "--device", "/dev/dri/card0"]
 
 # Once confirmed working, revert to the original entrypoint:
-#CMD ["/init"]
+CMD ["/init"]
