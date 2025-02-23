@@ -1,4 +1,5 @@
-version: '3.9'
+version: "3.8"
+
 services:
   plex:
     image: gerardogve/plex-cof:latest
@@ -22,10 +23,7 @@ services:
       - /mnt/moosefs/music:/music
       - /mnt/moosefs/movies/comic:/peliculas_comic
       - /mnt/moosefs/movies/ecchi:/movies_ecchi
-    mounts:
-      - type: bind
-        source: /dev/dri
-        target: /dev/dri
+      - dri:/dev/dri
     hostname: odroidxu4
     deploy:
       replicas: 1
@@ -47,3 +45,10 @@ networks:
   outside:
     external:
       name: "host"
+volumes:
+  dri:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /dev/dri
