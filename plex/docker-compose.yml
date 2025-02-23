@@ -22,11 +22,11 @@ services:
       - /mnt/moosefs/music:/music
       - /mnt/moosefs/movies/comic:/peliculas_comic
       - /mnt/moosefs/movies/ecchi:/movies_ecchi
-    hostname: odroidxu4
     mounts:
       - type: bind
         source: /dev/dri
         target: /dev/dri
+    hostname: odroidxu4
     deploy:
       replicas: 1
       labels:
