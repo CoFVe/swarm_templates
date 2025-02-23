@@ -3,6 +3,7 @@ version: "3.8"
 services:
   plex:
     image: gerardogve/plex-cof:latest
+    user: root
     environment:
       - PUID=1000
       - PGID=44         # Updated to match host's video group
