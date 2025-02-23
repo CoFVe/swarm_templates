@@ -9,7 +9,7 @@ services:
       #- PGID=1000
       - VERSION=docker
       - ADVERTISE_IP="http://172.25.25.5:32400"
-      - LIBVA_DRIVER_NAME=amdgpu
+      - LIBVA_DRIVER_NAME=radeonsi
       - LIBVA_DRIVERS_PATH=/usr/lib/x86_64-linux-gnu/dri
     volumes:
       - /mnt/moosefs/apps/Plex:/config
