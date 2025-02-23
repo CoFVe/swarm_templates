@@ -3,7 +3,8 @@ services:
   plex:
     image: gerardogve/plex-cof:latest
     privileged: true
-    user: root  # Force running as root for testing
+    cap_add:
+      - ALL
     environment:
       - PUID=1000
       - PGID=1000
@@ -27,8 +28,8 @@ services:
     hostname: odroidxu4
     devices:
       - /dev/dri:/dev/dri
-    command: ["/bin/bash", "-c", "env && ls -l /dev/dri && vainfo --display drm && sleep infinity"]
     deploy:
+      mode: global
       replicas: 1
       labels:
         - traefik.enable=true
