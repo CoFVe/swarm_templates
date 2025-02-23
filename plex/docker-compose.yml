@@ -2,9 +2,6 @@ version: '3.9'
 services:
   plex:
     image: gerardogve/plex-cof:latest
-    privileged: true
-    cap_add:
-      - ALL
     environment:
       - PUID=1000
       - PGID=1000
@@ -26,10 +23,11 @@ services:
       - /mnt/moosefs/movies/comic:/peliculas_comic
       - /mnt/moosefs/movies/ecchi:/movies_ecchi
     hostname: odroidxu4
-    devices:
-      - /dev/dri:/dev/dri
+    mounts:
+      - type: bind
+        source: /dev/dri
+        target: /dev/dri
     deploy:
-      mode: global
       replicas: 1
       labels:
         - traefik.enable=true
