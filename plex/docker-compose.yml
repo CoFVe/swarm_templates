@@ -1,0 +1,45 @@
+services:
+  plex:
+    build:
+      context: https://github.com/CoFVe/swarm_templates.git
+      dockerfile: plex/Dockerfile
+    image: plex-cof:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - ADVERTISE_IP="http://172.25.25.5:32400"
+    volumes:
+      - /mnt/moosefs/apps/Plex:/config
+      - /mnt/moosefs/series/shows:/tv_shows
+      - /mnt/moosefs/movies/peliculas:/peliculas
+      - /mnt/moosefs/movies/3d:/3d_movies
+      - /mnt/moosefs/movies/infantiles:/peliculas_infantiles
+      - /mnt/moosefs/series/infantiles:/series_infantiles
+      - /mnt/moosefs/movies/anime:/movies_anime
+      - /mnt/moosefs/series/anime:/series_anime
+      - /mnt/moosefs/series/ecchi:/series_ecchi
+      - /mnt/moosefs/music:/music
+      - /mnt/moosefs/movies/comic:/peliculas_comic
+      - /mnt/moosefs/movies/ecchi:/movies_ecchi
+    devices:
+      - /dev/dri:/dev/dri
+    deploy:
+      replicas: 1
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=outside
+        - traefik.http.routers.plex.entrypoints=web
+        - traefik.http.routers.plex.rule=Host(`plex.cofhome`)
+        - traefik.http.routers.plex.service=plex
+        - traefik.http.services.plex.loadbalancer.server.port=32400
+        - traefik.port=80
+      placement:
+        constraints:
+          - node.labels.nuc==true
+    networks:
+      - outside
+
+networks:
+  outside:
+    external:
+      name: "host"
