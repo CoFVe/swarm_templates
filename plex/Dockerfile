@@ -19,7 +19,7 @@ RUN add-apt-repository universe
 RUN apt-get update && apt-get install -y plexmediaserver
 
 # Install VA-API packages and tools for AMD GPU acceleration
-RUN apt-get update && apt-get install -y mesa-va-drivers vainfo libva-utils && \
+RUN apt-get update && apt-get install -y mesa-va-drivers vainfo && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create directories for Plex configuration and transcode files
