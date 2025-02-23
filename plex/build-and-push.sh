@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Change to the directory where this script is located
+cd "$(dirname "$0")"
+
 # Load environment variables from .env
 if [ -f .env ]; then
   export $(grep -v '^#' .env | xargs)
@@ -19,9 +22,9 @@ fi
 echo "Logging in to Docker Hub..."
 echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
 
-# Build the image using the Dockerfile from the 'plex' directory in the repository
+# Build the image using the Dockerfile in this directory (the plex folder)
 echo "Building the Docker image..."
-docker build -t plex-cof:latest -f plex/Dockerfile .
+docker build -t plex-cof:latest -f Dockerfile .
 
 # Tag the image for Docker Hub
 echo "Tagging the image..."
