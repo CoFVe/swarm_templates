@@ -1,16 +1,11 @@
-version: "3.8"
-
+version: '3.9'
 services:
   plex:
-    image: gerardogve/plex-cof:latest
+    image: plexinc/pms-docker:1.41.4.9463-630c9f557
     environment:
-      - PUID=1000
-      - PGID=44         # Updated to match host's video group
-      #- PGID=1000
+      - PLEX_CLAIM=claim-QwNjGyMuHuyRut2pd9oZ
       - VERSION=docker
       - ADVERTISE_IP="http://172.25.25.5:32400"
-      - LIBVA_DRIVER_NAME=radeonsi
-      - LIBVA_DRIVERS_PATH=/usr/lib/x86_64-linux-gnu/dri
     volumes:
       - /mnt/moosefs/apps/Plex:/config
       - /mnt/moosefs/series/shows:/tv_shows
@@ -32,13 +27,16 @@ services:
         - traefik.enable=true
         - traefik.docker.network=outside
         - traefik.http.routers.plex.entrypoints=web
-        - traefik.http.routers.plex.rule=Host(`plex.cofhome`)
+        - traefik.http.routers.plex.rule=Host(plex.cofhome)
         - traefik.http.routers.plex.service=plex
         - traefik.http.services.plex.loadbalancer.server.port=32400
         - traefik.port=80
       placement:
         constraints:
           - node.labels.nuc==true
+        preferences:
+          - spread: node.labels.nuc
+    restart: always
     networks:
       - outside
 
