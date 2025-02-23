@@ -14,8 +14,8 @@ services:
     #  - "32414:32414/udp"
     environment:
       - PUID=1000
-      - PGID=44         # Updated to match host's video group
-      #- PGID=1000
+      #- PGID=44         # Updated to match host's video group
+      - PGID=1000
       - VERSION=docker
       - ADVERTISE_IP="http://172.25.25.5:32400"
       - LIBVA_DRIVER_NAME=radeonsi
