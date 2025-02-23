@@ -2,11 +2,13 @@ version: '3.9'
 services:
   plex:
     image: gerardogve/plex-cof:latest
+    privileged: true
     environment:
       - PUID=1000
       - PGID=1000
       - VERSION=docker
       - ADVERTISE_IP="http://172.25.25.5:32400"
+      - LIBVA_DRIVER_NAME=radeonsi
     volumes:
       - /mnt/moosefs/apps/Plex:/config
       - /mnt/moosefs/series/shows:/tv_shows
