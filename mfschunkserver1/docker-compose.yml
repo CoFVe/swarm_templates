@@ -12,7 +12,7 @@ services:
       - outside
     volumes:
       - /mnt/disk2/moosefs:/mnt/hdd0
-      - /mnt/disk1/moosefs:/mnt/hdd1
+      #- /mnt/disk1/moosefs:/mnt/hdd1
       - /mnt/disk10/moosefs:/mnt/hdd2
       - /mnt/disk12/moosefs:/mnt/hdd3
       - /docker/mfschunkserver1:/var/lib/mfs
