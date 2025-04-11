@@ -12,43 +12,43 @@ services:
        placement:
          max_replicas_per_node: 1
           
-       labels:
+       #labels:
         # Enable Traefik for this service, to make it available in the public network
-          - traefik.enable=true
-          - traefik.docker.network=traefik
-          - traefik.constraint-label=traefik
-          - traefik.http.routers.traefik.dashboard=true
-          - traefik.port=80
-          - traefik.http.routers.traefik.rule=Host(`traefik.cofhome`)
-          - traefik.http.routers.traefik.service=api@internal
-          - traefik.http.services.traefik.loadbalancer.server.port=8080
-          - traefik.http.routers.api.insecure=true
-          - traefik.http.routers.traefik.entrypoints=web
+       #   - traefik.enable=true
+       #   - traefik.docker.network=traefik
+       #   - traefik.constraint-label=traefik
+       #   - traefik.http.routers.traefik.dashboard=true
+       #   - traefik.port=80
+       #   - traefik.http.routers.traefik.rule=Host(`traefik.cofhome`)
+       #   - traefik.http.routers.traefik.service=api@internal
+       #   - traefik.http.services.traefik.loadbalancer.server.port=8080
+       #   - traefik.http.routers.api.insecure=true
+       #   - traefik.http.routers.traefik.entrypoints=web
         
            
     volumes:
        # Add Docker as a mounted volume, so that Traefik can read the labels of other services
        - /var/run/docker.sock:/var/run/docker.sock:ro
-    command:
-       - --log.level=DEBUG
-       - --api.insecure=true
+    #command:
+    #   - --log.level=DEBUG
+    #   - --api.insecure=true
        #- --providers.docker.constraints=Label(`traefik.constraint-label`, `traefik`)
-       - --accesslog
-       - --log
-       - --entrypoints.web.address=:80
-       - --providers.docker
-       - --providers.docker.exposedbydefault=false
-       - --providers.docker.swarmmode
+    #   - --accesslog
+    #   - --log
+    #   - --entrypoints.web.address=:80
+    #   - --providers.docker
+    #   - --providers.docker.exposedbydefault=false
+    #   - --providers.docker.swarmmode
        #- --providers.docker.network=traefik
-       - --api
-       - --api.dashboard=true
+    #   - --api
+    #   - --api.dashboard=true
     networks:
      # Use the public network created to be shared between Traefik and
      # any other service that needs to be publicly available with HTTPS
-       - traefik
+       - traefik_network
     restart: "unless-stopped"
 networks:
    # Use the previously created public network "traefik-public", shared with other
    # services that need to be publicly available via this Traefik
-   traefik:
+   traefik_network:
       external: true
