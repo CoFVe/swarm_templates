@@ -1,13 +1,12 @@
-version: '3.9'
 services:
-  plex:
-    image: plexinc/pms-docker:1.41.5.9522-a96edc606
+  plex-nuc:
+    image: plexinc/pms-docker:1.41.7.9823-59f304c16
     environment:
       - PLEX_CLAIM=claim-QwNjGyMuHuyRut2pd9oZ
       - VERSION=docker
       - ADVERTISE_IP="http://172.25.25.5:32400"
     volumes:
-      - /mnt/moosefs/apps/Plex:/config
+      - /mnt/moosefs/apps/PlexNuc:/config
       - /mnt/moosefs/series/shows:/tv_shows
       - /mnt/moosefs/movies/peliculas:/peliculas
       - /mnt/moosefs/movies/3d:/3d_movies
@@ -20,17 +19,20 @@ services:
       - /mnt/moosefs/movies/comic:/peliculas_comic
       - /mnt/moosefs/movies/ecchi:/movies_ecchi
       - dri:/dev/dri
-    hostname: odroidxu4
+    hostname: nuc
     deploy:
       replicas: 1
       labels:
-        - traefik.enable=true
-        - traefik.docker.network=outside
-        - traefik.http.routers.plex.entrypoints=web
-        - traefik.http.routers.plex.rule=Host(plex.cofhome)
-        - traefik.http.routers.plex.service=plex
+        #- traefik.enable=true
+        - traefik.http.routers.plex.rule=Host(`plex.cofhome.duckdns.org`)
+        - traefik.http.routers.plex.entrypoints=websecure
+        - traefik.http.routers.plex.tls.certresolver=letsencrypt
         - traefik.http.services.plex.loadbalancer.server.port=32400
-        - traefik.port=80
+        - traefik.swarm.network=nova_network
+
+        - traefik.http.routers.plex-http.rule=Host(`plex.cofhome.duckdns.org`)
+        - traefik.http.routers.plex-http.entrypoints=web
+        - traefik.http.routers.plex-http.middlewares=redirect-to-https
       placement:
         constraints:
           - node.labels.nuc==true
@@ -44,6 +46,10 @@ networks:
   outside:
     external:
       name: "host"
+#networks:
+#   nova_network:
+#    external: true
+#    name: nova_network
 volumes:
   dri:
     driver: local
