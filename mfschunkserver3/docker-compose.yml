@@ -5,7 +5,7 @@ services:
     deploy:
       placement:
         constraints:
-          -  node.labels.dietpi1==true
+          -  node.labels.dietpi3==true
         preferences:
           - spread: node.labels.dietpi
     networks:
@@ -22,7 +22,7 @@ services:
     deploy:
       placement:
         constraints:
-          -  node.labels.dietpi1==true
+          -  node.labels.dietpi3==true
         preferences:
           - spread: node.labels.dietpi
     networks:
