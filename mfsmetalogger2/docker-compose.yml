@@ -1,0 +1,20 @@
+version: '3.9'
+services:
+  mfsmetalogger2:
+    image: gerardogve/moosefs-metalogger-amd64:latest
+    deploy:
+      placement:
+        constraints:
+          -  node.labels.nuc==true
+        preferences:
+          - spread: node.labels.nuc
+    networks:
+      - outside
+    volumes:
+      - /docker/mfschunkserver2:/var/lib/mfs
+      - /docker/mfschunkserver2:/etc/mfs
+
+networks:
+  outside:
+    external:
+      name: "host"
