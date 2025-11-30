@@ -17,20 +17,7 @@ services:
       - /mnt/disk13/moosefs:/mnt/hdd3
       - /docker/mfschunkserver3:/var/lib/mfs
       - /docker/mfschunkserver3:/etc/mfs
-  mfsmetalogger3:
-    image: gerardogve/moosefs-metalogger:latest
-    deploy:
-      placement:
-        constraints:
-          -  node.labels.dietpi3==true
-        preferences:
-          - spread: node.labels.dietpi
-    networks:
-      - outside
-    volumes:
-      - /docker/mfschunkserver3:/var/lib/mfs
-      - /docker/mfschunkserver3:/etc/mfs
-
+  
 networks:
   outside:
     external:
