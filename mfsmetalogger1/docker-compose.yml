@@ -1,0 +1,20 @@
+version: '3.9'
+services:
+  mfsmetalogger1:
+    image: gerardogve/moosefs-metalogger:latest
+    deploy:
+      placement:
+        constraints:
+          -  node.labels.dietpi2==true
+        preferences:
+          - spread: node.labels.dietpi2
+    networks:
+      - outside
+    volumes:
+      - /docker/mfschunkserver1:/var/lib/mfs
+      - /docker/mfschunkserver1:/etc/mfs
+
+networks:
+  outside:
+    external:
+      name: "host"
