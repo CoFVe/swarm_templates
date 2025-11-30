@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   mfschunkserver2:
-    image: gerardogve/moosefs-chunkserver-amd64:latest
+    image: gerardogve/moosefs-chunkserver:2.0.0
     deploy:
       placement:
         constraints:
