@@ -17,19 +17,6 @@ services:
       - /mnt/disk8/moosefs:/mnt/hdd5
       - /docker/mfschunkserver2:/var/lib/mfs
       - /docker/mfschunkserver2:/etc/mfs
-  mfsmetalogger2:
-    image: gerardogve/moosefs-metalogger-amd64:latest
-    deploy:
-      placement:
-        constraints:
-          -  node.labels.nuc==true
-        preferences:
-          - spread: node.labels.nuc
-    networks:
-      - outside
-    volumes:
-      - /docker/mfschunkserver2:/var/lib/mfs
-      - /docker/mfschunkserver2:/etc/mfs
 
 networks:
   outside:
