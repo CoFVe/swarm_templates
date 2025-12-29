@@ -5,9 +5,9 @@ services:
     deploy:
       placement:
         constraints:
-          -  node.labels.nuc==true
+          -  node.labels.nuc2==true
         preferences:
-          - spread: node.labels.nuc
+          - spread: node.labels.nuc2
     networks:
       - outside
     volumes:
