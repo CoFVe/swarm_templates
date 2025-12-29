@@ -11,8 +11,8 @@ services:
     networks:
       - outside
     volumes:
-      - /docker/mfschunkserver3:/var/lib/mfs
-      - /docker/mfschunkserver3:/etc/mfs
+      - /docker/metalogger3:/var/lib/mfs
+      - /docker/metalogger3:/etc/mfs
 
 networks:
   outside:
