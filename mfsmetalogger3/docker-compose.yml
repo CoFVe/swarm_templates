@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   mfsmetalogger3:
-    image: gerardogve/moosefs-metalogger:2.0.0
+    image: gerardogve/moosefs-metalogger:latest
     deploy:
       placement:
         constraints:
